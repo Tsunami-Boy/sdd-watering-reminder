@@ -1,0 +1,13 @@
+# Entorno local de Devbox (paquetes Nix, herramientas de uv, estado)
+.devbox/
+
+# Entornos virtuales de Python
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# Archivos locales del sistema / editor
+.DS_Store
+.idea/
+.vscode/
