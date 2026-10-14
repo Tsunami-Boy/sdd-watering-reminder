@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: waterbot
+    runtime: docker
+    plan: free
+    healthCheckPath: /healthz
+    envVars:
+      - key: RUN_MODE
+        value: webhook
+      - key: BOT_TOKEN
+        sync: false
+      - key: WEBHOOK_SECRET
+        sync: false
+      - key: WEBHOOK_SECRET_TOKEN
+        sync: false
+      - key: DATABASE_URL
+        sync: false
