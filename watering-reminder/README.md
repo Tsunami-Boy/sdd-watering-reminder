@@ -62,7 +62,7 @@ Lint: `uv run ruff check .`
 1. Crea la base PostgreSQL (por ejemplo en Neon) y copia su `DATABASE_URL`.
 2. Crea el bot con BotFather y genera dos valores aleatorios para `WEBHOOK_SECRET` y
    `WEBHOOK_SECRET_TOKEN`.
-3. En Render crea un *Web Service* desde este repositorio (`render.yaml`, plan gratis) y define
+3. En Render crea un *Web Service* desde este repositorio (el `render.yaml` está en la raíz del repo y usa `rootDir: watering-reminder`; plan gratis) y define
    las variables de entorno en el panel.
 4. Comprueba `https://<servicio>.onrender.com/healthz` (debe responder 200).
 5. En UptimeRobot crea un monitor HTTP(s) para esa URL cada 10 minutos, para que Render no

@@ -27,7 +27,7 @@ before implementing.
 |----------------|-------|
 | Docker with what is needed | Phase 1: T004–T006 |
 | DB configuration | Phase 1 (compose database) + Phase 2 (schema, repository) |
-| Render | **Files prepared now (T007); actual deploy deferred to Phase 8 (T062–T068)**, because it needs the working bot and a Neon database. Nothing in Phases 1–7 requires Render. |
+| Render | **Files prepared now (T007); actual deploy moved to `specs/002-production-deployment` (was T062–T068)**, because it needs the working bot and a Neon database. Nothing in Phases 1–7 requires Render. |
 | Test structure | Phase 1: T009; fakes in Phase 2 (T016) |
 | Everything about time zone | Phase 3 (US1) |
 | Register plants, verify they are saved | Phase 4 (US2), incl. read-back tests T027–T028 |
@@ -192,22 +192,24 @@ before implementing.
 
 ## Phase 8: Polish, Docker run and Render deploy
 
+> `[~]` = moved out of this feature. T059 and T062–T068 are now tracked in `specs/002-production-deployment`; this feature is closed once that one is verified.
+
 **Purpose**: Cross-cutting checks, containerized run, and production deployment (deferred until now)
 
 - [X] T055 [P] Add multi-user isolation test in `tests/integration/test_multi_user.py`: two chats with different time zones and a plant of the same name get independent reminders at their own 08:00 and cannot read or delete each other's plants (FR-015)
 - [X] T056 [P] Add unknown command and invalid input tests in `tests/integration/test_unknown_input.py` (FR-016): unknown command, plain text outside a flow, group-chat messages ignored
 - [X] T057 [P] Security pass in `src/waterbot/`: confirm no token or secret in logs or exceptions, webhook path and header verified with constant-time comparison, callback ownership checks, no secrets in git (`git grep` for the token pattern)
 - [X] T058 Build and run with Docker (image builds; db + schema + persistence across `docker compose restart db` verified; the full app container needs a real BOT_TOKEN, see T059): `docker compose up --build`; verify `/healthz` returns 200 at `http://localhost:8000/healthz`, the app reaches the `db` service, and data persists after `docker compose restart app`
-- [ ] T059 (PENDING: needs a real BotFather token; the same behaviour is covered by the automated tests) Walk through all 12 scenarios in `quickstart.md` against the Docker stack and record results (use `CLOCK_OFFSET_HOURS` instead of waiting for 08:00)
+- [~] T059 MOVED to `specs/002-production-deployment`: (PENDING: needs a real BotFather token; the same behaviour is covered by the automated tests) Walk through all 12 scenarios in `quickstart.md` against the Docker stack and record results (use `CLOCK_OFFSET_HOURS` instead of waiting for 08:00)
 - [X] T060 [P] Write `README.md` for the project (what it does, commands, local run with Docker, tests, env vars) in Spanish
 - [X] T061 Run `uv run ruff check .` and `uv run pytest` (including `-m postgres` against the compose database) and fix any failure
-- [ ] T062 Create the Neon PostgreSQL database; confirm current free-tier terms (**verify**, per `research.md`); store `DATABASE_URL` only in Render's environment
-- [ ] T063 Create the Telegram bot token with BotFather (use a separate bot for tests); set `BOT_TOKEN`, `WEBHOOK_SECRET`, `WEBHOOK_SECRET_TOKEN` as random values in Render's environment
-- [ ] T064 Push the repository to GitHub and create the Render Web Service from `render.yaml` (Docker runtime, free plan); confirm free instance hours are enough for one always-on service (**verify**)
-- [ ] T065 After the first deploy, open `https://<service>.onrender.com/healthz` and confirm `200`; send `/start` to the bot and confirm the webhook works
-- [ ] T066 Create the UptimeRobot HTTP(s) monitor for the `/healthz` URL with a 10-minute interval and an alert contact
-- [ ] T067 Redeploy once with a pending reminder and confirm it is still sent afterwards (FR-014, SC-005)
-- [ ] T068 Register one real plant with a one-day interval and confirm the 08:00 reminder arrives in your real time zone on the following morning, then confirm and verify the next date
+- [~] T062 MOVED to `specs/002-production-deployment`: Create the Neon PostgreSQL database; confirm current free-tier terms (**verify**, per `research.md`); store `DATABASE_URL` only in Render's environment
+- [~] T063 MOVED to `specs/002-production-deployment`: Create the Telegram bot token with BotFather (use a separate bot for tests); set `BOT_TOKEN`, `WEBHOOK_SECRET`, `WEBHOOK_SECRET_TOKEN` as random values in Render's environment
+- [~] T064 MOVED to `specs/002-production-deployment`: Push the repository to GitHub and create the Render Web Service from `render.yaml` (Docker runtime, free plan); confirm free instance hours are enough for one always-on service (**verify**)
+- [~] T065 MOVED to `specs/002-production-deployment`: After the first deploy, open `https://<service>.onrender.com/healthz` and confirm `200`; send `/start` to the bot and confirm the webhook works
+- [~] T066 MOVED to `specs/002-production-deployment`: Create the UptimeRobot HTTP(s) monitor for the `/healthz` URL with a 10-minute interval and an alert contact
+- [~] T067 MOVED to `specs/002-production-deployment`: Redeploy once with a pending reminder and confirm it is still sent afterwards (FR-014, SC-005)
+- [~] T068 MOVED to `specs/002-production-deployment`: Register one real plant with a one-day interval and confirm the 08:00 reminder arrives in your real time zone on the following morning, then confirm and verify the next date
 
 ---
 

@@ -4,7 +4,7 @@
 
 **Created**: 2026-10-13
 
-**Status**: Draft
+**Status**: Implemented (production deployment tracked separately)
 
 **Update 2026-10-13**: country replaced by a user-selected time zone (decided in `/speckit-plan`).
 
@@ -165,8 +165,9 @@ it no longer appears and stops generating reminders.
 - **FR-009**: The bot MUST send a watering reminder at 08:00 local time of the user's time zone on
   the day a plant is due.
 - **FR-010**: Each reminder MUST let the user confirm the watering from the same message.
-- **FR-011**: If a reminder is not confirmed, the bot MUST repeat it every 4 hours until the user
-  confirms or deletes the plant.
+- **FR-011**: If a reminder is not confirmed, the bot MUST repeat it every 4 hours at the
+  local slots 08:00, 12:00, 16:00 and 20:00, never overnight. After the 20:00 slot the next
+  repeat is sent at 08:00 the next day, and so on until the user confirms or deletes the plant.
 - **FR-012**: On confirmation, the bot MUST schedule the next reminder after the interval of the
   season in effect on the confirmation day, counted from that day.
 - **FR-013**: A newly registered plant MUST be treated as just watered on its registration day.
@@ -193,7 +194,8 @@ it no longer appears and stops generating reminders.
 - **SC-002**: 100% of due reminders are delivered at 08:00 local time of the user's time zone, with
   a tolerance of 5 minutes.
 - **SC-003**: After a missed confirmation, the repeat reminder arrives 4 hours (±5 minutes) after
-  the previous one, with no more than one pending reminder per plant at a time.
+  the previous one within the daytime slots (08:00–20:00), and at 08:00 the next day after the
+  20:00 slot, with no more than one pending reminder per plant at a time.
 - **SC-004**: After confirming a watering, the user receives no further reminders for that watering.
 - **SC-005**: No scheduled reminder is lost after the bot restarts.
 - **SC-006**: In a test with a Southern Hemisphere time zone and a Northern Hemisphere time zone on the
