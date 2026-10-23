@@ -24,17 +24,17 @@ Replaces T059 and T062–T068 of `001-plant-watering-reminders/tasks.md`.
 
 ## Phase 2: Cloud services (US1)
 
-- [ ] T005 [O] [US1] Create the Neon database; record free-tier limits and idle behaviour in `verification.md` (FR-002, FR-010)
-- [ ] T006 [O] [US1] Create the production bot in BotFather; generate `WEBHOOK_SECRET` and `WEBHOOK_SECRET_TOKEN` (32+ random characters) (FR-003, FR-004)
-- [ ] T007 [O] [US1] Push to GitHub; create the Render Web Service from `render.yaml`; enter the four secrets in the dashboard; record free instance hours vs a 744 h month (FR-001, FR-004, FR-007, FR-010)
-- [ ] T008 [US1] Open `/healthz` and expect `200`; send `/start` to the real bot; check wrong path secret → `404` and wrong header → `403` (FR-005, SC-001)
+- [X] T005 [O] [US1] Create the Neon database; record free-tier limits and idle behaviour in `verification.md` (FR-002, FR-010)
+- [X] T006 [O] [US1] Create the production bot in BotFather; generate `WEBHOOK_SECRET` and `WEBHOOK_SECRET_TOKEN` (32+ random characters) (FR-003, FR-004)
+- [X] T007 [O] [US1] Push to GitHub; create the Render Web Service from `render.yaml`; enter the four secrets in the dashboard; record free instance hours vs a 744 h month (FR-001, FR-004, FR-007, FR-010)
+- [X] T008 [US1] Open `/healthz` and expect `200`; send `/start` to the real bot; check wrong path secret → `404` and wrong header → `403` (FR-005, SC-001)
 
 **Checkpoint**: bot is live and answers.
 
 ## Phase 3: Always on and monitored (US2)
 
-- [ ] T009 [O] [US2] Create the UptimeRobot monitor on `/healthz`, 10-minute interval, email alert contact (FR-006)
-- [ ] T010 [O] [US2] Induce an outage (suspend the service), confirm the alert arrives within 15 minutes, resume (SC-003)
+- [X] T009 [O] [US2] Create the UptimeRobot monitor on `/healthz`, 10-minute interval, email alert contact (FR-006)
+- [X] T010 [O] [US2] Induce an outage (suspend the service), confirm the alert arrives within 15 minutes, resume (SC-003)
 - [ ] T011 [US2] After 24 h without messages confirm `/start` still answers immediately (SC-002)
 
 ## Phase 4: Real-world verification (US3)
