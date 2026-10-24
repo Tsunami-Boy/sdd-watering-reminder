@@ -11,13 +11,16 @@
 | 2026-10-23 | UptimeRobot monitor on `/healthz`, 10 min, email contact | Monitor shows Up | Active (owner confirmed) | Yes |
 | 2026-10-23 | Induced outage (SC-003): service suspended 00:25 | Down alert within 15 min | Down email at 00:35 (10 min) | Yes |
 | 2026-10-23 | Recovery after resume | Up email, monitor green | Up email at 00:40 | Yes |
+| 2026-10-23 | `/start` after 24 h without messages (SC-002) | Answers immediately | Answered immediately (owner confirmed) | Yes |
 
 ## Free-tier findings (FR-010)
 
-- Neon: _pending, write the limits seen in the dashboard_
-- Render: _pending, free instance hours vs 744 h month_
+- Neon: Free plan, 1 GB storage, 100 compute hours per month. Compute suspends when idle, so 100 h is enough unless the database stays awake around the clock.
+- Render: Free plan, 750 instance hours per month shared across all projects. One always-on service uses 744 h in a 31-day month, so it fits while `waterbot` is the only free service.
+- UptimeRobot: Free plan, minimum interval 5 minutes (the monitor uses 10).
+- Cost (SC-007): no payment method registered on Render, Neon or UptimeRobot; all three show the Free plan. Monthly cost is zero (owner confirmed).
 
 ## Not yet checked
 
 - Wrong header with correct path secret → 403 (needs the secret; optional)
-- 24 h idle check (T011), 12 scenarios (T012), redeploy (T013), real plant (T015)
+- 12 scenarios (T012), redeploy (T013), real plant (T015)

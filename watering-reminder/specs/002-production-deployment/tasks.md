@@ -35,7 +35,7 @@ Replaces T059 and T062–T068 of `001-plant-watering-reminders/tasks.md`.
 
 - [X] T009 [O] [US2] Create the UptimeRobot monitor on `/healthz`, 10-minute interval, email alert contact (FR-006)
 - [X] T010 [O] [US2] Induce an outage (suspend the service), confirm the alert arrives within 15 minutes, resume (SC-003)
-- [ ] T011 [US2] After 24 h without messages confirm `/start` still answers immediately (SC-002)
+- [X] T011 [US2] After 24 h without messages confirm `/start` still answers immediately (SC-002)
 
 ## Phase 4: Real-world verification (US3)
 
