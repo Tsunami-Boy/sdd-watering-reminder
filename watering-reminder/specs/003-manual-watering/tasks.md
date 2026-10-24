@@ -69,9 +69,9 @@ description: "Task list for Manual Watering"
 
 - [X] T020 Run `uv run pytest` and `uv run ruff check .`; both must pass (constitution: tests pass before a task is complete)
 - [X] T021 [P] Add the `/regar` row and flow to `specs/001-plant-watering-reminders/contracts/bot-commands.md` (principle V), copying from `specs/003-manual-watering/contracts/bot-commands.md`
-- [ ] T022 Commit to `main` and push so Render redeploys
-- [ ] T023 [O] Run the manual steps of `quickstart.md` against the live bot and record results in `specs/003-manual-watering/verification.md`
-- [ ] T024 Set `Status` to Implemented in `specs/003-manual-watering/spec.md`
+- [X] T022 Commit to `main` and push so Render redeploys
+- [X] T023 [O] Run the manual steps of `quickstart.md` against the live bot and record results in `specs/003-manual-watering/verification.md`
+- [X] T024 Set `Status` to Implemented in `specs/003-manual-watering/spec.md`
 
 ## Dependencies
 

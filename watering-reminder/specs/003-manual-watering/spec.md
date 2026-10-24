@@ -4,7 +4,7 @@
 
 **Created**: 2026-10-23
 
-**Status**: Draft
+**Status**: Implemented
 
 **Input**: User description: "Comando /regar: se usa cuando el usuario riega una planta por su cuenta antes de que llegue la alerta. Al usarlo, el bot pide cuál de las plantas registradas se va a regar. Luego de seleccionar, muestra un mensaje para confirmar el riego. Si se confirma, se actualiza la fecha de último riego de esa planta y se corre la fecha de la próxima notificación según corresponda. Si no se confirma, no se hace nada."
 
