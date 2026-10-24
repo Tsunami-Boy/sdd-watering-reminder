@@ -11,6 +11,7 @@ COMMANDS = [
     ("zona", "Elegir tu zona horaria"),
     ("agregar", "Registrar una planta"),
     ("plantas", "Ver tus plantas"),
+    ("regar", "Registrar un riego que ya hiciste"),
     ("eliminar", "Eliminar una planta"),
     ("cancelar", "Cancelar lo que estás haciendo"),
 ]
@@ -41,6 +42,8 @@ ASK_TYPE = "¿Qué tipo de planta es? (por ejemplo: Dólar, Suculenta)"
 ASK_SUMMER = "¿Cada cuántos días hay que regarla en verano? (número entero)"
 ASK_WINTER = "¿Cada cuántos días hay que regarla en invierno? (número entero)"
 NAME_TAKEN = "Ya tienes una planta con ese nombre. Elige otro nombre."
+REGAR_CHOOSE = "¿Qué planta regaste?"
+REGAR_CANCELLED = "No se registró ningún riego."
 DELETE_CHOOSE = "¿Qué planta quieres eliminar?"
 DELETE_CANCELLED = "No se eliminó nada."
 PLANT_GONE = "Esa planta ya no existe."
@@ -90,3 +93,11 @@ def reminder_text(name: str, plant_type: str, repeat: bool) -> str:
 
 def watered(next_due: date) -> str:
     return f"Regada ✅. Próximo riego: {fmt_date(next_due)}"
+
+
+def regar_ask(name: str) -> str:
+    return f"¿Confirmas que regaste «{name}»?"
+
+
+def regar_done(name: str, next_due: date) -> str:
+    return f"Regada ✅ «{name}». Próximo riego: {fmt_date(next_due)}"

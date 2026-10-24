@@ -14,7 +14,7 @@ from waterbot.domain.clock import Clock
 from waterbot.domain.models import Plant
 from waterbot.domain.schedule import local_date, next_due_on
 from waterbot.domain.seasons import season_at
-from waterbot.services import change_timezone, confirm_watering
+from waterbot.services import change_timezone, confirm_watering, water_plant
 from waterbot.storage.interface import DuplicatePlantName, Repository
 
 log = logging.getLogger(__name__)
@@ -81,6 +81,16 @@ class BotService:
         buttons = [[Button(p.name, f"del:{p.id}")] for p in plants]
         return Reply(messages.DELETE_CHOOSE, buttons)
 
+    async def regar(self, chat_id: int) -> Reply:
+        user = await self._repo.get_user(chat_id)
+        if user is None or not user.timezone:
+            return Reply(messages.NEED_TIMEZONE)
+        plants = await self._repo.list_plants(chat_id)
+        if not plants:
+            return Reply(messages.NO_PLANTS)
+        buttons = [[Button(p.name, f"reg:{p.id}")] for p in plants]
+        return Reply(messages.REGAR_CHOOSE, buttons)
+
     async def cancelar(self, chat_id: int) -> Reply:
         if self._registrations.pop(chat_id, None) is None:
             return Reply(messages.NOTHING_TO_CANCEL)
@@ -107,6 +117,12 @@ class BotService:
             return await self._timezone_callback(chat_id, rest)
         if kind == "water":
             return await self._water_callback(chat_id, rest)
+        if kind == "reg":
+            return await self._regar_ask(chat_id, rest)
+        if kind == "regok":
+            return await self._regar_confirm(chat_id, rest)
+        if kind == "regno":
+            return Reply(messages.REGAR_CANCELLED, edit=True)
         if kind == "del":
             return await self._delete_ask(chat_id, rest)
         if kind == "delok":
@@ -242,3 +258,23 @@ class BotService:
         if plant is None or not await self._repo.delete_plant(chat_id, plant.id):
             return Reply(messages.PLANT_GONE, edit=True)
         return Reply(messages.deleted(plant.name), edit=True)
+
+    # manual watering --------------------------------------------------------------------
+
+    async def _regar_ask(self, chat_id: int, raw_id: str) -> Reply:
+        plant = await self._own_plant(chat_id, raw_id)
+        if plant is None:
+            return Reply(messages.PLANT_GONE, edit=True)
+        buttons = [[Button("Sí", f"regok:{plant.id}"), Button("No", "regno")]]
+        return Reply(messages.regar_ask(plant.name), buttons, edit=True)
+
+    async def _regar_confirm(self, chat_id: int, raw_id: str) -> Reply:
+        user = await self._repo.get_user(chat_id)
+        if not raw_id.isdigit() or user is None or not user.timezone:
+            return Reply(messages.PLANT_GONE, edit=True)
+        result = await water_plant(
+            self._repo, chat_id, int(raw_id), user.timezone, self._clock.now()
+        )
+        if result is None:
+            return Reply(messages.PLANT_GONE, edit=True)
+        return Reply(messages.regar_done(result.plant.name, result.next_due), edit=True)

@@ -79,6 +79,7 @@ def register_handlers(application: Application, service: BotService) -> None:
         ("zona", "zona"),
         ("agregar", "agregar"),
         ("plantas", "plantas"),
+        ("regar", "regar"),
         ("eliminar", "eliminar"),
         ("cancelar", "cancelar"),
     ]:

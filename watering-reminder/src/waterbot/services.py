@@ -34,3 +34,20 @@ async def confirm_watering(
     await repo.mark_watered(plant_id, today)
     updated = replace(plant, last_watered_on=today)
     return WateredResult(updated, next_due_on(updated, zone))
+
+
+async def water_plant(
+    repo: Repository, chat_id: int, plant_id: int, zone: str, now: datetime
+) -> WateredResult | None:
+    """Register a watering done outside a reminder; clears the pending reminder if there is one.
+
+    None when the plant does not exist or is not theirs.
+    """
+    plant = await repo.get_plant(chat_id, plant_id)
+    if plant is None:
+        return None
+    await repo.delete_reminder(plant_id)
+    today = local_date(zone, now)
+    await repo.mark_watered(plant_id, today)
+    updated = replace(plant, last_watered_on=today)
+    return WateredResult(updated, next_due_on(updated, zone))

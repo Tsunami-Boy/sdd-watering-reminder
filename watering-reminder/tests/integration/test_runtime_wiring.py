@@ -41,8 +41,8 @@ def test_all_commands_and_callbacks_are_registered(fake_repo):
     runtime = BotRuntime(Settings.from_env(ENV), PostgresRepository(ENV["DATABASE_URL"]))
     handlers = runtime._application.handlers[0]
     commands = {c for h in handlers if hasattr(h, "commands") for c in h.commands}
-    assert {"start", "zona", "agregar", "plantas", "eliminar", "cancelar"} <= commands
-    assert len(handlers) == 9  # 6 commands + callbacks + text + unknown command
+    assert {"start", "zona", "agregar", "plantas", "regar", "eliminar", "cancelar"} <= commands
+    assert len(handlers) == 10  # 7 commands + callbacks + text + unknown command
 
 
 def test_reply_buttons_become_inline_keyboard():

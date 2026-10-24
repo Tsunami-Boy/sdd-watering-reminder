@@ -11,6 +11,7 @@ Commands are registered with Telegram (`setMyCommands`) so they appear in the co
 | `/zona` | Choose or change the time zone | FR-002, FR-003 |
 | `/agregar` | Register a plant (guided) | FR-004–FR-006 |
 | `/plantas` | List the user's plants | FR-007 |
+| `/regar` | Register a watering done outside a reminder (choose, then confirm); see spec 003 | 003 FR-001–FR-012 |
 | `/eliminar` | Delete a plant (choose, then confirm) | FR-008 |
 | `/cancelar` | Abort the current guided flow | FR-016 |
 
@@ -65,3 +66,9 @@ Callback data: `water:<plant_id>`.
 - If the reminder no longer exists (already confirmed or plant deleted), the bot answers
   "Este recordatorio ya no está activo" and does nothing else.
 - Callbacks from a chat other than the plant owner's are rejected.
+
+## `/regar` flow
+
+Added by `003-manual-watering`; full contract in `specs/003-manual-watering/contracts/bot-commands.md`.
+Choose a plant (`reg:<id>`), confirm (`regok:<id>` / `regno`); on yes, `last_watered_on` is set to the
+local today and any pending reminder for the plant is deleted.
