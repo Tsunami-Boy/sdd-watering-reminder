@@ -23,7 +23,7 @@ Owner-run steps in order. Record every result in `verification.md` (create it fr
 1. Push to GitHub.
 2. Create the Web Service from `render.yaml` (Docker, free plan, correct root directory).
 3. Enter `BOT_TOKEN`, `WEBHOOK_SECRET`, `WEBHOOK_SECRET_TOKEN`, `DATABASE_URL` in the dashboard.
-4. After the first deploy open `https://<service>.onrender.com/healthz`, expect `200` `{"status":"ok"}`.
+4. After the first deploy open `https://<service>.onrender.com/healthz`, expect `200` `{"status":"healthy"}`.
 5. Send `/start` to the bot, expect the welcome message.
 6. Wrong-secret check: `POST /webhook/wrong` expects `404`; correct path with a wrong header expects `403`.
 

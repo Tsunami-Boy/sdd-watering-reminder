@@ -41,7 +41,7 @@ def create_app(
     @app.api_route("/healthz", methods=["GET", "HEAD"])
     async def healthz() -> JSONResponse:
         if await repo.health_check():
-            return JSONResponse({"status": "ok"})
+            return JSONResponse({"status": "healthy"})
         return JSONResponse({"status": "degraded"}, status_code=503)
 
     @app.post("/webhook/{secret}")

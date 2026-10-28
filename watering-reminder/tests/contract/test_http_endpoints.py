@@ -40,7 +40,7 @@ def client(parts):
 
 def test_healthz_ok(client):
     response = client.get("/healthz")
-    assert response.status_code == 200 and response.json() == {"status": "ok"}
+    assert response.status_code == 200 and response.json() == {"status": "healthy"}
     assert client.head("/healthz").status_code == 200
 
 

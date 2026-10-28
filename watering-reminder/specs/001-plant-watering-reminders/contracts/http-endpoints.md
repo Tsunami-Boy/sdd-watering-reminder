@@ -8,7 +8,7 @@ Used by UptimeRobot (every 10 minutes) and as Render's health check path.
 
 | Case | Response |
 |------|----------|
-| App up and database reachable | `200` with `{"status": "ok"}` |
+| App up and database reachable | `200` with `{"status": "healthy"}` |
 | App up, database unreachable | `503` with `{"status": "degraded"}` |
 
 No authentication, no user data in the response. The check must be fast (query `SELECT 1` with a
